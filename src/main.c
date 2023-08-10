@@ -20,6 +20,7 @@ int main(){
     const char *fileExts[] = {"archive", "image", "program", "document"};
     char srcPath[MAXLEN];
     char destPath[MAXLEN];
+    char *folderName;
     int arrSize = sizeof(fileExts) / sizeof(fileExts[0]);
 
     createFolders(fileExts, arrSize, folderPath);
@@ -41,9 +42,10 @@ int main(){
                     strcmp(extension, "ppt") == 0 ||
                     strcmp(extension, "pptx") == 0) {
 
+                        folderName = createDirName("document");
                         memset(destPath, 0, sizeof(destPath));
                         strcpy(destPath, folderPath);
-                        strcat(destPath, createDirName("document"));
+                        strcat(destPath, folderName);
                         strcat(destPath, "/");
                         strcat(destPath, entry->d_name);
 
@@ -52,12 +54,14 @@ int main(){
                         strcat(srcPath, entry->d_name);
 
                         rename(srcPath, destPath);
+                        free(folderName);
                     }
                     else if(strcmp(extension, "zip") == 0 || strcmp(extension, "7zip") == 0 || strcmp(extension, "rar") == 0){
 
+                        folderName = createDirName("archive");
                         memset(destPath, 0, sizeof(destPath));
                         strcpy(destPath, folderPath);
-                        strcat(destPath, createDirName("archive"));
+                        strcat(destPath, folderName);
                         strcat(destPath, "/");
                         strcat(destPath, entry->d_name);
 
@@ -66,12 +70,14 @@ int main(){
                         strcat(srcPath, entry->d_name);
 
                         rename(srcPath, destPath);
+                        free(folderName);
                     }
                     else if(strcmp(extension, "app") == 0 || strcmp(extension, "dmg") == 0 || strcmp(extension, "exe") == 0 || strcmp(extension, "pkg") == 0){
 
+                        folderName = createDirName("program");
                         memset(destPath, 0, sizeof(destPath));
                         strcpy(destPath, folderPath);
-                        strcat(destPath, createDirName("program"));
+                        strcat(destPath, folderName); 
                         strcat(destPath, "/");
                         strcat(destPath, entry->d_name);
 
@@ -80,12 +86,14 @@ int main(){
                         strcat(srcPath, entry->d_name);
 
                         rename(srcPath, destPath);
+                        free(folderName);
                     }
                     else if(strcmp(extension, "png") == 0 || strcmp(extension, "jpg") == 0|| strcmp(extension, "bmp") == 0 || strcmp(extension, "webmp") == 0){
                         
+                        folderName = createDirName("image");
                         memset(destPath, 0, sizeof(destPath));
                         strcpy(destPath, folderPath);
-                        strcat(destPath, createDirName("image"));
+                        strcat(destPath, folderName); 
                         strcat(destPath, "/");
                         strcat(destPath, entry->d_name);
 
@@ -94,7 +102,9 @@ int main(){
                         strcat(srcPath, entry->d_name);
 
                         rename(srcPath, destPath);
+                        free(folderName);
                     }
+                    
                 }            
             }
             closedir(dir);
