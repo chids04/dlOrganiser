@@ -145,6 +145,7 @@ void createFolders(const char **array, int size, const char *path){
             strcat(filePath, folderName);
             free(folderName);
             mkdir(filePath, 0777);
+            closedir(tempDir);
         }
         else{
             closedir(tempDir);
